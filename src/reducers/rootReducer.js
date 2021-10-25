@@ -10,17 +10,14 @@ function rootReducer(state = [], action)  {
         lastResults:[]
     }
     switch (action.type) {
-        case 'FETCH_PLAYLISTS':
+        case 'ADD_RESULT':
+            
+            state.lastFunctions.unshift(action.equation)
+            state.lastResults.unshift(action.finalResult)
+            debugger
             return (
-                action.playlists.data
-            )
-        case 'ADD_PLAYLIST':
-            return (
-                action.playlists.data
-            )
-        case 'DELETE_PLAYLIST':
-            const idx = state.findIndex(playlist => playlist.id === action.id);
-            return [...state.slice(0,idx), ...state.slice(idx+1)]  
+                state
+            ) 
         
         default:
             return state;

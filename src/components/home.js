@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Button from './button.js'
 import Display from './display.js'
+import { calculate } from '../actions/calculate.js'
 
 
 class Home extends React.Component {
@@ -44,9 +45,11 @@ class Home extends React.Component {
                 break
             case ')':
                 if(this.state.parenthesis.length !== 0){
-                    debugger
                     this.state.parenthesis.pop()
                     this.state.currentEntry.push(')')
+                    this.setState({
+                        lastClicked: event.target.value,
+                        })
                 } else{
                     let temp = this.state.currentEntry
                     this.setState({
@@ -70,7 +73,8 @@ class Home extends React.Component {
                 }
               break
             case '=':
-                if(this.state.parenthesis !== []) {
+                debugger
+                if(this.state.parenthesis.length !== 0) {
                     let temp = this.state.currentEntry
                     this.setState({
                         currentEntry: "Missing Closing Parenthesis"
@@ -81,7 +85,12 @@ class Home extends React.Component {
                           })
                       }, 2000);
                 } else {
-
+                    calculate(this.state.currentEntry, this.props.dispatch)
+                    debugger
+                    //this.state.currentEntry.push("= " + this.props.state.lastResults[0])
+                    this.setState({
+                        lastClicked: null
+                    })
                 }
               break
               case 'c':
@@ -89,12 +98,16 @@ class Home extends React.Component {
                       lastClicked: null,
                       currentEntry: []
                   })
+                break
             default:
-                debugger
+                if(this.props.state.operators.includes(this.state.lastClicked)){
+                    this.state.currentEntry.pop()
+                }
                 this.state.currentEntry.push(event.target.value)
                 this.setState({
                     lastClicked: event.target.value
                 })
+                
               return
           }
         
@@ -138,7 +151,7 @@ class Home extends React.Component {
 
 
     const mapStateToProps = state => {
-        return { state}
+        return {state}
       }
       
       
