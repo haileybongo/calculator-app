@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Button from './button.js'
+import Display from './display.js'
 
 
 class Home extends React.Component {
@@ -8,15 +9,13 @@ class Home extends React.Component {
     state = {
         lastClicked: null,
         currentEntry: [],
-        openParenthesis: []
+        parenthesis: []
       }
 
       handleClick = (event) => {
-          debugger
 
           if(this.props.state.numbers.includes(parseInt(event.target.value))){
             if(typeof(this.state.lastClicked) === 'number'){
-              debugger
               let val = this.state.lastClicked.toString().concat(event.target.value)
               val = parseInt(val)
               this.state.currentEntry.pop()
@@ -26,11 +25,10 @@ class Home extends React.Component {
                   })
                   return
             } else {
-              debugger
               let val = parseInt(event.target.value)
               this.state.currentEntry.push(val)
               this.setState({
-                  lastClicked: val
+                  lastClicked: val,
                   })
                   return
           }}
@@ -38,17 +36,23 @@ class Home extends React.Component {
 
           switch (event.target.value) {
             case '(':
-                this.state.parenthesis.push("(")
+                this.state.parenthesis.push('(')
+                this.state.currentEntry.push('(')
+                this.setState({
+                    lastClicked: event.target.value,
+                    })
                 break
             case ')':
-                if(this.state.parenthesis !== []){
+                if(this.state.parenthesis.length !== 0){
+                    debugger
                     this.state.parenthesis.pop()
+                    this.state.currentEntry.push(')')
                 } else{
                     let temp = this.state.currentEntry
                     this.setState({
                         currentEntry: "Missing Open Parenthesis"
                         })
-                    setTimeout(function() {
+                    setTimeout(() => {
                         this.setState({
                             currentEntry: temp
                             })
@@ -58,7 +62,8 @@ class Home extends React.Component {
             case '+/-':
                 if(typeof(this.state.lastClicked) === 'number'){
                 let val = this.state.lastClicked * -1
-                this.state.currentEntry.pop().push(val)
+                this.state.currentEntry.pop()
+                this.state.currentEntry.push(val)
                 this.setState({
                     lastClicked: val,
                     })
@@ -70,7 +75,7 @@ class Home extends React.Component {
                     this.setState({
                         currentEntry: "Missing Closing Parenthesis"
                       })
-                    setTimeout(function() {
+                    setTimeout(() =>{
                         this.setState({
                             currentEntry: temp
                           })
@@ -85,7 +90,11 @@ class Home extends React.Component {
                       currentEntry: []
                   })
             default:
+                debugger
                 this.state.currentEntry.push(event.target.value)
+                this.setState({
+                    lastClicked: event.target.value
+                })
               return
           }
         
@@ -105,14 +114,22 @@ class Home extends React.Component {
         return(
             this.props.state.numbers.map(number=> <Button buttonName = {number} handleClick = {this.handleClick} />))
     }
+
+    createActionButtons(){
+        return(
+            this.props.state.actionButtons.map(action => <Button buttonName = {action} handleClick = {this.handleClick} />)
+        )
+    }
     
     
     
       render() {
         return (
           <div>
+            {<Display lastClicked = {this.state.lastClicked} currentEntry = {this.state.currentEntry}/> }
             {this.createOperatorButtons()}
             {this.createNumberButtons()}
+            {this.createActionButtons()}
             
           </div>
         );
