@@ -49,10 +49,11 @@ code {
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;
   position: fixed;
-  top: 35%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 250px;
+  height:30%;
 	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.02), 0 5px 40px rgba(0, 0, 0, 0.02);
 	background-color: #fff;
 	border-radius: 14px;
@@ -72,9 +73,9 @@ code {
   letter-spacing: -0.5px;
   background-color: #111;
   position: fixed;
-  height:100px;
+  height:10%;
   width: 250px;
-  top:15%;
+  top:10%;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 14px;
@@ -90,9 +91,9 @@ code {
   letter-spacing: -0.5px;
   background-color: rgba(236, 237, 238, 1);
   position: fixed;
-  height:100px;
-  width: 250px;
-  top:60%;
+  height:20%;
+  width: 30%;
+  top:80%;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 14px;

@@ -26,9 +26,19 @@ class Calculator extends React.Component {
       }
   
         if(this.props.state.numbers.includes(parseInt(event.target.value))){
-            if(typeof(this.state.lastClicked) === 'number'){
-                let val = this.state.lastClicked.toString().concat(event.target.value)
-                val = parseInt(val)
+            if(typeof(this.state.lastClicked) === 'number' || this.state.lastClicked === "."){
+                let val
+                if(this.state.lastClicked === "."){
+                    let len = this.state.currentEntry.length -2
+                    val = this.state.currentEntry.slice(len)
+                    val.push(parseInt(event.target.value))
+                    val = parseFloat(val.join(''))
+                    this.state.currentEntry.pop()
+                }else{                
+                val = this.state.lastClicked.toString().concat(event.target.value)
+                val = parseFloat(val)
+                }
+                debugger
                 this.state.currentEntry.pop()
                 this.state.currentEntry.push(val)
                 this.setState({
@@ -86,6 +96,7 @@ class Calculator extends React.Component {
                   }
               break
           case '+/-':
+              debugger
               if(typeof(this.state.lastClicked) === 'number'){
               let val = this.state.lastClicked * -1
               this.state.currentEntry.pop()
@@ -115,7 +126,7 @@ class Calculator extends React.Component {
                   })
               }
             break
-            case 'c':
+          case 'c':
                 this.setState({
                     lastClicked: null,
                     currentEntry: []
