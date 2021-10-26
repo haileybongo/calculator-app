@@ -4,6 +4,9 @@
 - Must close parenthesis
 - Must have open parenthesis for all close parenthesis
 - If two operators are chosen in a row, the second will replace the first
+-if two numbers are chosen in a row, they must concat together to make a new number
+-no operator between number and parenthesis
+- 
 
 
 

@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Button from './button.js'
 import Display from './display.js'
+import Memory from './memory.js'
 import { calculate } from '../actions/calculate.js'
 
 
@@ -10,12 +11,21 @@ class Home extends React.Component {
     state = {
         lastClicked: null,
         currentEntry: [],
-        parenthesis: []
+        parenthesis: [],
+
       }
 
-      handleClick = (event) => {
 
-          if(this.props.state.numbers.includes(parseInt(event.target.value))){
+      
+      handleClick = (event) => {
+        if(this.state.lastClicked === undefined){
+            debugger
+            this.setState({
+                currentEntry:[]
+            })
+        }
+
+        if(this.props.state.numbers.includes(parseInt(event.target.value))){
             if(typeof(this.state.lastClicked) === 'number'){
               let val = this.state.lastClicked.toString().concat(event.target.value)
               val = parseInt(val)
@@ -34,7 +44,7 @@ class Home extends React.Component {
                   return
           }}
         
-
+        
           switch (event.target.value) {
             case '(':
                 this.state.parenthesis.push('(')
@@ -73,7 +83,6 @@ class Home extends React.Component {
                 }
               break
             case '=':
-                debugger
                 if(this.state.parenthesis.length !== 0) {
                     let temp = this.state.currentEntry
                     this.setState({
@@ -86,10 +95,8 @@ class Home extends React.Component {
                       }, 2000);
                 } else {
                     calculate(this.state.currentEntry, this.props.dispatch)
-                    debugger
-                    //this.state.currentEntry.push("= " + this.props.state.lastResults[0])
                     this.setState({
-                        lastClicked: null
+                        lastClicked: undefined
                     })
                 }
               break
@@ -109,17 +116,13 @@ class Home extends React.Component {
                 })
                 
               return
-          }
-        
-    
-
+          }        
         }
     
 
-      createOperatorButtons() {
+    createOperatorButtons() {
         return(
-            this.props.state.operators.map(operator=> <Button buttonName = {operator} handleClick = {this.handleClick} />))
-            
+            this.props.state.operators.map(operator=> <Button buttonName = {operator} handleClick = {this.handleClick} />))       
     }
 
 
@@ -133,7 +136,7 @@ class Home extends React.Component {
             this.props.state.actionButtons.map(action => <Button buttonName = {action} handleClick = {this.handleClick} />)
         )
     }
-    
+
     
     
       render() {
@@ -143,6 +146,7 @@ class Home extends React.Component {
             {this.createOperatorButtons()}
             {this.createNumberButtons()}
             {this.createActionButtons()}
+            {<Memory lastFunctions = {this.props.state.lastFunctions} lastResults = {this.props.state.lastResults}/>}
             
           </div>
         );

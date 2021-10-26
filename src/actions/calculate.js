@@ -16,16 +16,12 @@ export const calculate = (input, dispatch) =>{
 
     for(let i = parLocations.length -1; i >= 0; i--){
         let paren = input.slice(parLocations[i][0] +1, parLocations[i][1])
-        debugger
         let res = compute(paren)
         let len = parLocations[i][1] - parLocations[i][0] + 1
-        debugger
         input.splice(parLocations[i][0], len, res)
-        debugger
     }
 
     let finalResult = compute(input)
-    debugger
     dispatch({type: 'ADD_RESULT', finalResult, equation})    
 
 }
@@ -37,29 +33,30 @@ export const calculate = (input, dispatch) =>{
 function compute(section){
 
     if(section.includes('^')){
-        let power = 0
+        let power = section.indexOf('^')
         while(power !== -1){
-        power = section.indexOf('^')
         let result = Math.pow(section[power-1], section[power+1])
-        section.splice(power -1, 3, result)
+        section.splice((power -1), 3, result)
+        power = section.indexOf('^')
         }
     }
 
     if(section.includes('*')){
-        let mult = 0
+        let mult = section.indexOf('*')
         while(mult!== -1){
-        mult = section.indexOf('*')
         let result = section[mult-1] * section[mult +1]
-        section.splice(mult -1, 3, result)
+        debugger
+        section.splice((mult -1), 3, result)
+        mult = section.indexOf('*')
         }
     }
 
     if(section.includes('/')){
-        let divis = 0
+        let divis = section.indexOf('/')
         while(divis!== -1){
-        divis = section.indexOf('/')
         let result = section[divis-1] / section[divis +1]
-        section.splice(divis -1, 3, result)
+        section.splice((divis -1), 3, result)
+        divis = section.indexOf('/')
         }
     }
 
@@ -73,11 +70,11 @@ function compute(section){
     }
 
     if(section.includes('-')){
-        let min = 0
+        let min = section.indexOf('-')
         while(min!== -1){
-        min = section.indexOf('+')
         let result = section[min-1] + section[min +1]
-        section.splice(min -1, 3, result)
+        section.splice((min -1), 3, result)
+        min = section.indexOf('+')
         }
     }
 
