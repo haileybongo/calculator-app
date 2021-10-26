@@ -25,24 +25,24 @@ class Calculator extends React.Component {
           })
       }
   
-      if(this.props.state.numbers.includes(parseInt(event.target.value))){
-          if(typeof(this.state.lastClicked) === 'number'){
-            let val = this.state.lastClicked.toString().concat(event.target.value)
-            val = parseInt(val)
-            this.state.currentEntry.pop()
-            this.state.currentEntry.push(val)
-            this.setState({
-                lastClicked: val
-                })
-                return
-          } else {
-            let val = parseInt(event.target.value)
-            this.state.currentEntry.push(val)
-            this.setState({
-                lastClicked: val,
-                })
-                return
-        }}
+        if(this.props.state.numbers.includes(parseInt(event.target.value))){
+            if(typeof(this.state.lastClicked) === 'number'){
+                let val = this.state.lastClicked.toString().concat(event.target.value)
+                val = parseInt(val)
+                this.state.currentEntry.pop()
+                this.state.currentEntry.push(val)
+                this.setState({
+                    lastClicked: val
+                    })
+                    return
+            } else {
+                let val = parseInt(event.target.value)
+                this.state.currentEntry.push(val)
+                this.setState({
+                    lastClicked: val,
+                    })
+                    return
+            }}
       
       
         switch (event.target.value) {
