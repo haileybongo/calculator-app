@@ -10,7 +10,6 @@ export const calculate = (input, dispatch) =>{
     while(parOpenIndex >= 0){
        parOpenIndex =  input.indexOf('(', (parOpenIndex))
        if(parOpenIndex >= 0){
-           debugger
            let nextPar = input.indexOf('(', parOpenIndex +1)
             if(nextPar !== -1 && input.indexOf('(', parOpenIndex +1) < input.indexOf(')', parOpenIndex)){
                 debugger

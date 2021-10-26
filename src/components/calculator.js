@@ -47,11 +47,24 @@ class Calculator extends React.Component {
       
         switch (event.target.value) {
           case '(':
+            if(typeof(this.state.lastClicked) === 'number'){
+              let temp = this.state.currentEntry
+              this.setState({
+                currentEntry: "Please Use Operator"
+                })
+            setTimeout(() => {
+                this.setState({
+                    currentEntry: temp
+                    })
+                }, 2000);
+            } else {
+            
               this.state.parenthesis.push('(')
               this.state.currentEntry.push('(')
               this.setState({
                   lastClicked: event.target.value,
                   })
+                }
               break
           case ')':
               if(this.state.parenthesis.length !== 0){
