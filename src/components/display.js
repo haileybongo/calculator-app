@@ -3,8 +3,8 @@ import React from 'react'
 const Display = (props) => {
 
     return (
-      <div>
-        {props.lastClicked} <br/>
+      <div class="display">
+        {props.result} <br/>
         {Array.isArray(props.currentEntry) ? props.currentEntry.join(' ') : props.currentEntry}
          
       </div>

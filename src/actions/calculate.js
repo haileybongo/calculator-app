@@ -1,17 +1,27 @@
 export const calculate = (input, dispatch) =>{
-
     let equation = [...input]
 
     let parOpenIndex = 0
     let parCloseIndex = input.length
     let parLocations = []
 
+    
+
     while(parOpenIndex >= 0){
-       parOpenIndex =  input.indexOf('(', (parOpenIndex === 0 ? parOpenIndex : parOpenIndex + 1))
+       parOpenIndex =  input.indexOf('(', (parOpenIndex))
        if(parOpenIndex >= 0){
-        parCloseIndex = input.lastIndexOf(')', parCloseIndex -1)
-        parLocations.push([parOpenIndex,parCloseIndex])
-       } 
+           debugger
+           let nextPar = input.indexOf('(', parOpenIndex +1)
+            if(nextPar !== -1 && input.indexOf('(', parOpenIndex +1) < input.indexOf(')', parOpenIndex)){
+                debugger
+            parCloseIndex = input.lastIndexOf(')', parCloseIndex -1)
+            parLocations.push([parOpenIndex,parCloseIndex])
+            } else {
+                parCloseIndex = input.indexOf(')', parOpenIndex)
+                parLocations.push([parOpenIndex,parCloseIndex])
+            }
+       } else break
+       parOpenIndex++
     }
 
     for(let i = parLocations.length -1; i >= 0; i--){
@@ -45,7 +55,6 @@ function compute(section){
         let mult = section.indexOf('*')
         while(mult!== -1){
         let result = section[mult-1] * section[mult +1]
-        debugger
         section.splice((mult -1), 3, result)
         mult = section.indexOf('*')
         }
@@ -72,7 +81,7 @@ function compute(section){
     if(section.includes('-')){
         let min = section.indexOf('-')
         while(min!== -1){
-        let result = section[min-1] + section[min +1]
+        let result = section[min-1] - section[min +1]
         section.splice((min -1), 3, result)
         min = section.indexOf('+')
         }
